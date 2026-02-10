@@ -21,11 +21,13 @@
     <div class="container">
         <div class="content">
             <h1 class="title">
-                <span class="line">Hi Crishia Adviento</span>
+                <span class="line">Hey,</span>
+                <span class="line">I have a question</span>
+                <span class="line">for you...</span>
             </h1>
             
             <div class="question-box">
-                <h2 class="question">Will you be my Valentine's date? 💕</h2>
+                <h2 class="question">Will you be my Valentine? 💕</h2>
                 
                 <div class="buttons">
                     <button class="btn btn-yes" id="yesBtn">Yes! 💖</button>
@@ -39,12 +41,36 @@
     
     <div class="modal" id="modal">
         <div class="modal-content">
-            <h2 class="modal-title">💖You’ve made me so happy💖</h2>
-            <p class="modal-text">Knowing I get to spend this day in your company is all I really wanted,
-                Thank you for saying yes; it truly means the world to me,
-                I’m looking forward to a quiet, beautiful evening just being together.
-            </p>
-            <button class="btn btn-close" id="closeBtn">I'll see you then💖</button>
+            <h2 class="modal-title">🎉 Best Day Ever! 🎉</h2>
+            <p class="modal-text">You just made me the happiest person! Can't wait for our Valentine's date! 💕</p>
+            <button class="btn btn-close" id="closeBtn">Close 💖</button>
+        </div>
+    </div>
+    
+    <!-- Secret Admin Panel (only accessible via URL: ?admin=true) -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-content">
+            <h2 class="admin-title">🔒 Admin Panel</h2>
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="yesCount">0</div>
+                    <div class="stat-label">Yes Responses 💖</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="noAttempts">0</div>
+                    <div class="stat-label">No Attempts 😅</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="visitCount">0</div>
+                    <div class="stat-label">Page Visits 👀</div>
+                </div>
+            </div>
+            <div class="response-log" id="responseLog">
+                <h3>Response History:</h3>
+                <div id="logEntries">No responses yet...</div>
+            </div>
+            <button class="btn btn-clear" id="clearBtn">Clear Data</button>
+            <button class="btn btn-close-admin" id="closeAdminBtn">Close Panel</button>
         </div>
     </div>
     
