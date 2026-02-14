@@ -1,79 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A special Valentine's Day question for someone special">
-    <meta name="keywords" content="Valentine's Day, Valentine, love, date, proposal">
-    <meta name="author" content="Your Name">
-    
-    <!-- Open Graph for social sharing -->
-    <meta property="og:title" content="A Valentine's Day Question">
-    <meta property="og:description" content="Will you be my Valentine?">
-    <meta property="og:type" content="website">
-    
-    <title>Will You Be My Valentine? 💕</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>John Paul & Crishia – Our Love Story</title>
+  <meta name="description" content="The love story of John Paul Gardoce and Crishia Adviento, documented in photos and memories."/>
+  <meta name="keywords" content="John Paul Gardoce, Crishia Adviento, love story, couple"/>
+  <meta name="author" content="John Paul Gardoce"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --rose:      #c97b6e;
+      --deep-rose: #9e4f45;
+      --blush:     #f4ddd8;
+      --cream:     #fdf8f4;
+      --warm:      #fffcf9;
+      --gold:      #c2965a;
+      --gold-lt:   #e5cfa0;
+      --ink:       #2e1c14;
+      --muted:     #8a6659;
+      --card-bg:   rgba(255,252,249,0.9);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Lato',sans-serif; background:var(--cream); color:var(--ink); min-height:100vh; }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-thumb { background:var(--gold-lt); border-radius:3px; }
+
+    /* ─── LOGIN OVERLAY ─── */
+    #overlay {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(46,28,20,.85); backdrop-filter:blur(12px);
+      align-items:center; justify-content:center;
+    }
+    #overlay.open { display:flex; }
+    .login-box {
+      background:var(--warm); border:1px solid var(--gold-lt); border-radius:14px;
+      padding:3rem 2.4rem; width:330px; text-align:center; position:relative;
+      box-shadow:0 40px 90px rgba(46,28,20,.35);
+      animation:popIn .35s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes popIn { from{opacity:0;transform:scale(.88) translateY(20px)} to{opacity:1;transform:none} }
+    .lclose { position:absolute; top:14px; right:16px; background:none; border:none; font-size:1.4rem; color:var(--muted); cursor:pointer; }
+    .lclose:hover { color:var(--deep-rose); }
+    .lheart { font-size:2rem; display:block; margin-bottom:.6rem; }
+    .login-box h2 { font-family:'Great Vibes',cursive; font-size:2.1rem; color:var(--deep-rose); margin-bottom:.25rem; }
+    .login-box p  { font-size:.7rem; color:var(--muted); letter-spacing:.1em; margin-bottom:1.5rem; }
+    .login-box input {
+      width:100%; padding:.85rem 1rem; margin-bottom:.85rem;
+      border:1px solid var(--gold-lt); border-radius:8px;
+      font-family:'Lato',sans-serif; font-size:.95rem;
+      text-align:center; letter-spacing:.22em; outline:none; background:white;
+      transition:border-color .25s;
+    }
+    .login-box input:focus { border-color:var(--rose); }
+    .lerr { color:var(--deep-rose); font-size:.7rem; margin-top:-.4rem; margin-bottom:.7rem; display:none; }
+    .btn-enter {
+      width:100%; padding:.9rem;
+      background:linear-gradient(135deg,var(--rose),var(--deep-rose));
+      color:white; border:none; border-radius:8px;
+      font-family:'Lato',sans-serif; font-size:.72rem;
+      letter-spacing:.24em; text-transform:uppercase; cursor:pointer; transition:opacity .25s;
+    }
+    .btn-enter:hover { opacity:.88; }
+
+    /* ─── NAV ─── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:800;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 2.5rem;
+      background:rgba(253,248,244,.94); backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(194,150,90,.15);
+    }
+    .nav-brand { font-family:'Great Vibes',cursive; font-size:1.85rem; color:var(--deep-rose); text-decoration:none; }
+    .nav-r { display:flex; align-items:center; gap:1.5rem; }
+    #abtn {
+      background:none; border:1px solid rgba(194,150,90,.45); color:var(--gold);
+      padding:.32rem .9rem; border-radius:20px; font-size:.62rem; letter-spacing:.2em;
+      text-transform:uppercase; cursor:pointer; font-family:'Lato',sans-serif; transition:all .25s;
+    }
+    #abtn:hover { background:var(--gold); color:white; border-color:var(--gold); }
+    #abtn.on { background:var(--deep-rose); border-color:var(--deep-rose); color:white; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height:100vh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      padding:110px 2rem 5rem; text-align:center;
+      background:
+        radial-gradient(ellipse at 20% 15%,rgba(244,221,216,.55) 0%,transparent 52%),
+        radial-gradient(ellipse at 80% 85%,rgba(226,207,160,.28) 0%,transparent 52%),
+        var(--warm);
+      position:relative; overflow:hidden;
+    }
+    .petal { position:absolute; border-radius:50% 10% 50% 10%; background:var(--blush); opacity:0; pointer-events:none; animation:fall linear infinite; }
+    @keyframes fall { 0%{opacity:0;transform:translateY(-50px) rotate(0deg)} 10%{opacity:.3} 90%{opacity:.15} 100%{opacity:0;transform:translateY(110vh) rotate(720deg)} }
+
+    .hero-eye  { font-size:.62rem; letter-spacing:.38em; text-transform:uppercase; color:var(--gold); margin-bottom:.9rem; animation:up .8s .1s both; }
+    .hero-h1   { font-family:'Great Vibes',cursive; font-size:clamp(4rem,10vw,8rem); color:var(--deep-rose); line-height:1; animation:up .8s .2s both; }
+    .hero-sub  { font-family:'Playfair Display',serif; font-size:clamp(.9rem,2vw,1.2rem); color:var(--muted); letter-spacing:.28em; text-transform:uppercase; margin-top:.7rem; font-style:italic; animation:up .8s .35s both; }
+    .divider   { display:flex; align-items:center; gap:1rem; margin:1.8rem auto; animation:up .8s .45s both; }
+    .dline     { width:65px; height:1px; }
+    .dline.l   { background:linear-gradient(to right,transparent,var(--gold)); }
+    .dline.r   { background:linear-gradient(to left,transparent,var(--gold)); }
+    .dheart    { color:var(--rose); font-size:.9rem; }
+    .scroll-cue { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.45rem; opacity:.4; animation:bob 2.4s ease infinite; }
+    .scroll-cue span { font-size:.54rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+    .sarrow { width:14px; height:14px; border-right:1px solid var(--gold); border-bottom:1px solid var(--gold); transform:rotate(45deg); }
+    @keyframes up  { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none} }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    /* ─── SECTION SHELL ─── */
+    section { padding:5.5rem 2rem; }
+    .sec-eye { font-size:.62rem; letter-spacing:.34em; text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:.5rem; }
+    .sec-h2  { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.7rem); font-weight:400; color:var(--ink); text-align:center; margin-bottom:3.5rem; }
+    .sec-h2 em { font-style:italic; color:var(--deep-rose); }
+    .sec-h2::after { content:''; display:block; width:50px; height:1px; background:linear-gradient(to right,var(--rose),var(--gold)); margin:.9rem auto 0; }
+
+    /* ─── UPLOAD CARD (admin only) ─── */
+    .upload-card {
+      display:none; max-width:860px; margin:0 auto 3.5rem;
+      background:var(--card-bg); border:1px solid rgba(194,150,90,.22); border-radius:14px;
+      padding:2rem 2.2rem; box-shadow:0 8px 40px rgba(46,28,20,.07);
+    }
+    body.admin .upload-card { display:block; }
+    .uc-label { font-size:.6rem; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+
+    .drop-zone {
+      border:2px dashed rgba(194,150,90,.38); border-radius:10px;
+      padding:2.2rem 1rem; text-align:center; cursor:pointer;
+      background:rgba(244,221,216,.1); transition:background .3s,border-color .3s;
+      margin-bottom:1rem; position:relative;
+    }
+    .drop-zone:hover,.drop-zone.drag { background:rgba(244,221,216,.26); border-color:var(--rose); }
+    .drop-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+    .dz-icon { font-size:2rem; margin-bottom:.5rem; display:block; }
+    .dz-txt  { font-size:.76rem; color:var(--muted); letter-spacing:.1em; }
+    .dz-txt strong { color:var(--rose); }
+
+    .preview-strip { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .pthumb {
+      width:70px; height:70px; border-radius:6px; object-fit:cover;
+      border:2px solid var(--gold-lt); cursor:pointer; transition:transform .2s,border-color .2s;
+    }
+    .pthumb:hover { transform:scale(1.06); border-color:var(--rose); }
+
+    .uf-grid { display:grid; gap:.9rem; margin-top:.5rem; }
+    .flabel { font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:.35rem; }
+
+    .uf-grid textarea {
+      width:100%; min-height:110px; padding:.9rem 1rem;
+      border:1px solid rgba(194,150,90,.28); border-radius:8px;
+      font-family:'Playfair Display',serif; font-size:1.02rem;
+      color:var(--ink); background:white; resize:vertical; outline:none; line-height:1.78;
+      transition:border-color .25s;
+    }
+    .uf-grid textarea:focus { border-color:var(--rose); }
+    .uf-grid input[type=text] {
+      width:100%; padding:.75rem 1rem;
+      border:1px solid rgba(194,150,90,.28); border-radius:8px;
+      font-family:'Lato',sans-serif; font-size:.9rem; color:var(--ink);
+      background:white; outline:none; transition:border-color .25s;
+    }
+    .uf-grid input[type=text]:focus { border-color:var(--rose); }
+
+    .btn-pub {
+      margin-top:1.2rem; padding:.85rem 2.5rem;
+      background:linear-gradient(135deg,var(--rose),var(--deep-rose));
+      color:white; border:none; border-radius:8px;
+      font-family:'Lato',sans-serif; font-size:.72rem;
+      letter-spacing:.22em; text-transform:uppercase; cursor:pointer;
+      transition:opacity .25s,transform .2s;
+    }
+    .btn-pub:hover { opacity:.88; transform:translateY(-2px); }
+
+    /* ─── POSTS FEED ─── */
+    #posts-section { background:radial-gradient(ellipse at 6% 50%,rgba(244,221,216,.28) 0%,transparent 48%),var(--cream); }
+    .feed { max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:3rem; }
+
+    /* THE CARD – photo left, message right */
+    .pcard {
+      background:var(--card-bg);
+      border:1px solid rgba(194,150,90,.16);
+      border-radius:16px; overflow:hidden;
+      display:grid; grid-template-columns:55% 45%;
+      min-height:340px;
+      box-shadow:0 8px 40px rgba(46,28,20,.08);
+      opacity:0; transform:translateY(22px);
+      animation:cardIn .65s ease forwards;
+    }
+    .pcard:nth-child(even) { grid-template-columns:45% 55%; }
+    .pcard:nth-child(even) .pc-photo { order:2; }
+    .pcard:nth-child(even) .pc-msg   { order:1; }
+    @keyframes cardIn { to{opacity:1;transform:none} }
+
+    .pc-photo { position:relative; overflow:hidden; min-height:300px; cursor:zoom-in; background:var(--blush); }
+    .pc-photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+    .pcard:hover .pc-photo img { transform:scale(1.04); }
+    /* multi-photo grid inside card */
+    .photo-grid { display:grid; grid-template-rows:1fr 1fr; height:100%; }
+    .photo-grid .pc-photo { min-height:150px; }
+
+    .pc-msg {
+      padding:2.5rem 2.2rem; display:flex; flex-direction:column;
+      justify-content:center; position:relative;
+    }
+    .pc-date  { font-size:.58rem; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); margin-bottom:.9rem; }
+    .pc-caption { font-family:'Playfair Display',serif; font-size:clamp(.98rem,1.5vw,1.15rem); line-height:1.88; color:var(--ink); white-space:pre-wrap; }
+    .pc-sig   { margin-top:1.4rem; font-size:.62rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); }
+    .pc-sig em { color:var(--rose); font-style:italic; }
+
+    .pc-delete {
+      display:none; position:absolute; top:12px; right:14px;
+      background:rgba(200,60,60,.82); color:white; border:none;
+      padding:.3rem .75rem; border-radius:20px; font-size:.58rem;
+      letter-spacing:.14em; text-transform:uppercase; cursor:pointer;
+      font-family:'Lato',sans-serif; transition:background .2s;
+    }
+    .pc-delete:hover { background:#b02020; }
+    body.admin .pc-delete { display:block; }
+
+    .no-posts-msg {
+      font-family:'Playfair Display',serif; font-size:1.1rem;
+      font-style:italic; color:var(--muted); text-align:center; padding:3rem 0;
+    }
+
+    /* no-photo card (message only) */
+    .pcard.text-only { grid-template-columns:1fr; }
+    .pcard.text-only .pc-photo { display:none; }
+    .pcard.text-only .pc-msg { order:1; text-align:center; align-items:center; padding:3rem; }
+
+    /* ─── LIGHTBOX ─── */
+    #lightbox {
+      display:none; position:fixed; inset:0; z-index:8000;
+      background:rgba(16,8,4,.94); backdrop-filter:blur(8px);
+      align-items:center; justify-content:center;
+    }
+    #lightbox.open { display:flex; }
+    #lb-img { max-width:92vw; max-height:90vh; border-radius:6px; object-fit:contain; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+    #lb-close { position:absolute; top:20px; right:26px; background:none; border:none; color:rgba(255,255,255,.6); font-size:2.2rem; cursor:pointer; transition:color .2s; }
+    #lb-close:hover { color:white; }
+    #lb-prev,#lb-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.1); border:none; color:rgba(255,255,255,.7); width:48px; height:48px; border-radius:50%; font-size:1.5rem; cursor:pointer; transition:background .2s; display:flex; align-items:center; justify-content:center; }
+    #lb-prev { left:18px; } #lb-next { right:18px; }
+    #lb-prev:hover,#lb-next:hover { background:rgba(255,255,255,.22); color:white; }
+
+    /* ─── FOOTER ─── */
+    footer { background:var(--ink); color:rgba(255,255,255,.4); text-align:center; padding:3.5rem 2rem; }
+    .foot-brand { font-family:'Great Vibes',cursive; font-size:2.4rem; color:var(--gold-lt); display:block; margin-bottom:.5rem; }
+    footer p { font-size:.67rem; letter-spacing:.2em; text-transform:uppercase; line-height:1.9; }
+    footer .fg { color:var(--gold); }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.on { opacity:1; transform:none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:680px){
+      nav { padding:.85rem 1.2rem; }
+      .pcard,.pcard:nth-child(even) { grid-template-columns:1fr !important; }
+      .pcard:nth-child(even) .pc-photo,.pcard:nth-child(even) .pc-msg { order:unset; }
+      .pc-photo { min-height:240px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="hearts-container" id="heartsContainer"></div>
-    
-    <div class="container">
-        <div class="content">
-            <h1 class="title">
-                <span class="line">Hi Crishia Adviento</span>
-            </h1>
-            
-            <div class="question-box">
-                <h2 class="question">Will you be my Valentine's date?</h2>
-                
-                <div class="buttons">
-                    <button class="btn btn-yes" id="yesBtn">Yes! 💖</button>
-                    <button class="btn btn-no" id="noBtn">No</button>
-                </div>
-            </div>
-            
-            <div class="response" id="response"></div>
-        </div>
+
+<!-- LOGIN -->
+<div id="overlay">
+  <div class="login-box">
+    <button class="lclose" onclick="closeL()">×</button>
+    <span class="lheart">💕</span>
+    <h2>Admin Login</h2>
+    <p>Only John Paul can enter here</p>
+    <input type="password" id="pinput" placeholder="Password" onkeydown="if(event.key==='Enter')tryLogin()"/>
+    <div class="lerr" id="lerr">Wrong password — try again ♡</div>
+    <button class="btn-enter" onclick="tryLogin()">Enter ♡</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lb-close" onclick="closeLB()">×</button>
+  <button id="lb-prev"  onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt=""/>
+  <button id="lb-next"  onclick="lbNav(1)">›</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#home">JP &amp; Crishia</a>
+  <div class="nav-r">
+    <button id="abtn" onclick="toggleAdmin()">Admin</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <p class="hero-eye">A Love Story Worth Keeping</p>
+  <h1 class="hero-h1">Our Love Story</h1>
+  <p class="hero-sub">John Paul &amp; Crishia</p>
+  <div class="divider">
+    <span class="dline l"></span><span class="dheart">♡</span><span class="dline r"></span>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="sarrow"></div></div>
+</section>
+
+<!-- POSTS -->
+<section id="posts-section">
+  <p class="sec-eye">Our Moments</p>
+  <h2 class="sec-h2 reveal">Photos &amp; <em>Messages</em></h2>
+
+  <!-- Admin upload card -->
+  <div class="upload-card">
+    <div class="uc-label">📸 Upload a New Moment</div>
+    <div class="drop-zone" id="dz">
+      <input type="file" id="photo-input" accept="image/*" multiple onchange="handleFiles(this.files)"/>
+      <span class="dz-icon">🌸</span>
+      <p class="dz-txt"><strong>Click to choose photos</strong> &nbsp;or drag &amp; drop</p>
     </div>
-    
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <h2 class="modal-title">💖You’ve made me so happy💖</h2>
-            <p class="modal-text">Knowing I get to spend this day in your company is all I really wanted,
-                Thank you for saying yes; it truly means the world to me,
-                I’m looking forward to a quiet, beautiful evening just being together.💕</p>
-            <button class="btn btn-close" id="closeBtn">Close 💖</button>
-        </div>
+    <div class="preview-strip" id="prev-strip"></div>
+    <div class="uf-grid">
+      <div>
+        <label class="flabel">Message</label>
+        <textarea id="cap-input" placeholder="Write something beautiful about this moment..."></textarea>
+      </div>
+      <div>
+        <label class="flabel">Date Label &nbsp;(optional)</label>
+        <input type="text" id="date-input" placeholder="e.g.  February 14, 2025"/>
+      </div>
     </div>
-    
-    <!-- Secret Admin Panel (only accessible via URL: ?admin=true) -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-content">
-            <h2 class="admin-title">🔒 Admin Panel</h2>
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <div class="stat-number" id="yesCount">0</div>
-                    <div class="stat-label">Yes Responses 💖</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="noAttempts">0</div>
-                    <div class="stat-label">No Attempts 😅</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="visitCount">0</div>
-                    <div class="stat-label">Page Visits 👀</div>
-                </div>
-            </div>
-            <div class="response-log" id="responseLog">
-                <h3>Response History:</h3>
-                <div id="logEntries">No responses yet...</div>
-            </div>
-            <button class="btn btn-clear" id="clearBtn">Clear Data</button>
-            <button class="btn btn-close-admin" id="closeAdminBtn">Close Panel</button>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
+    <button class="btn-pub" onclick="publish()">Publish This Moment ♡</button>
+  </div>
+
+  <!-- Feed -->
+  <div class="feed" id="feed">
+    <p class="no-posts-msg" id="empty-msg">No moments yet — log in as admin to share your first photo &amp; message ♡</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-brand">John Paul &amp; Crishia</span>
+  <p class="fg">John Paul Gardoce &amp; Crishia Adviento</p>
+  <p>Made with ♡ &nbsp;·&nbsp; Our Love Story</p>
+</footer>
+
+<script>
+/* ── CONFIG ── change the password below ── */
+const PW = 'Johnpaulgardoce@12@89';
+const STORE = 'ls_moments_v3';
+
+/* ── STATE ── */
+let isAdmin = false, staged = [], lbImgs = [], lbIdx = 0;
+let posts = (() => { try { return JSON.parse(localStorage.getItem(STORE)) || []; } catch(e){ return []; } })();
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify(posts)); } catch(e){} };
+
+/* ── AUTH ── */
+function toggleAdmin() { isAdmin ? logout() : openLogin(); }
+function openLogin() {
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(() => document.getElementById('pinput').focus(), 100);
+}
+function closeL() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('pinput').value = '';
+  document.getElementById('lerr').style.display = 'none';
+}
+function tryLogin() {
+  if (document.getElementById('pinput').value === PW) {
+    isAdmin = true; closeL();
+    document.body.classList.add('admin');
+    const b = document.getElementById('abtn');
+    b.textContent = '✓ Admin'; b.classList.add('on');
+  } else {
+    document.getElementById('lerr').style.display = 'block';
+    document.getElementById('pinput').value = '';
+    document.getElementById('pinput').focus();
+  }
+}
+function logout() {
+  isAdmin = false;
+  document.body.classList.remove('admin');
+  const b = document.getElementById('abtn');
+  b.textContent = 'Admin'; b.classList.remove('on');
+  staged = [];
+  document.getElementById('prev-strip').innerHTML = '';
+  document.getElementById('cap-input').value = '';
+  document.getElementById('date-input').value = '';
+}
+
+/* ── FILES ── */
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    const r = new FileReader();
+    r.onload = e => { staged.push(e.target.result); renderPrev(); };
+    r.readAsDataURL(f);
+  });
+  document.getElementById('photo-input').value = '';
+}
+function renderPrev() {
+  const s = document.getElementById('prev-strip');
+  s.innerHTML = '';
+  staged.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.className = 'pthumb'; img.src = src; img.title = 'Click to remove';
+    img.onclick = () => { staged.splice(i,1); renderPrev(); };
+    s.appendChild(img);
+  });
+}
+
+/* drag-drop */
+const dz = document.getElementById('dz');
+dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); handleFiles(e.dataTransfer.files); });
+
+/* ── PUBLISH ── */
+function publish() {
+  const cap  = document.getElementById('cap-input').value.trim();
+  const date = document.getElementById('date-input').value.trim();
+  if (!staged.length && !cap) { alert('Add a photo or write a message first ♡'); return; }
+  posts.unshift({
+    id: Date.now(),
+    images: [...staged],
+    caption: cap,
+    date: date || new Date().toLocaleDateString('en-PH', {year:'numeric',month:'long',day:'numeric'})
+  });
+  save();
+  staged = [];
+  document.getElementById('prev-strip').innerHTML = '';
+  document.getElementById('cap-input').value = '';
+  document.getElementById('date-input').value = '';
+  renderFeed();
+  document.getElementById('feed').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── RENDER ── */
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function renderFeed() {
+  const feed = document.getElementById('feed');
+  feed.innerHTML = '';
+
+  if (!posts.length) {
+    feed.innerHTML = '<p class="no-posts-msg">No moments yet — log in as admin to share your first photo &amp; message ♡</p>';
+    return;
+  }
+
+  posts.forEach((p, pi) => {
+    const hasPhotos  = p.images && p.images.length > 0;
+    const hasCaption = p.caption && p.caption.trim();
+    const isTextOnly = !hasPhotos;
+
+    const card = document.createElement('div');
+    card.className = 'pcard' + (isTextOnly ? ' text-only' : '') ;
+    card.style.animationDelay = (pi * 0.07) + 's';
+
+    /* ── photo side ── */
+    let photoHTML = '';
+    if (hasPhotos) {
+      if (p.images.length === 1) {
+        photoHTML = `<div class="pc-photo" onclick="openLB(${pi},0)">
+          <img src="${p.images[0]}" alt="Moment"/>
+        </div>`;
+      } else {
+        const thumbs = p.images.slice(0,2).map((src,ii) =>
+          `<div class="pc-photo" style="min-height:150px" onclick="openLB(${pi},${ii})">
+            <img src="${src}" alt="Moment"/>
+          </div>`
+        ).join('');
+        photoHTML = `<div class="pc-photo" style="padding:0">
+          <div class="photo-grid">${thumbs}</div>
+        </div>`;
+      }
+    }
+
+    /* ── message side ── */
+    const msgHTML = `<div class="pc-msg">
+      <div class="pc-date">${esc(p.date)}</div>
+      ${hasCaption ? `<div class="pc-caption">${esc(p.caption)}</div>` : ''}
+      <div class="pc-sig">— <em>John Paul &amp; Crishia</em></div>
+      <button class="pc-delete" onclick="delPost(${p.id})">✕ Delete</button>
+    </div>`;
+
+    card.innerHTML = photoHTML + msgHTML;
+    feed.appendChild(card);
+  });
+}
+
+function delPost(id) {
+  if (!confirm('Delete this moment?')) return;
+  posts = posts.filter(p => p.id !== id);
+  save(); renderFeed();
+}
+
+/* ── LIGHTBOX ── */
+function openLB(pi, ii) { lbImgs = posts[pi].images; lbIdx = ii; showLBImg(); document.getElementById('lightbox').classList.add('open'); }
+function closeLB()       { document.getElementById('lightbox').classList.remove('open'); }
+function showLBImg()     {
+  document.getElementById('lb-img').src = lbImgs[lbIdx];
+  const multi = lbImgs.length > 1;
+  document.getElementById('lb-prev').style.display = multi ? 'flex' : 'none';
+  document.getElementById('lb-next').style.display = multi ? 'flex' : 'none';
+}
+function lbNav(d) { lbIdx = (lbIdx + d + lbImgs.length) % lbImgs.length; showLBImg(); }
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) closeLB(); });
+
+/* ── PETALS ── */
+function spawnPetals() {
+  const hero = document.querySelector('.hero');
+  for (let i=0;i<14;i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const sz = 6+Math.random()*10;
+    p.style.cssText = `width:${sz}px;height:${sz*1.4}px;left:${Math.random()*100}%;animation-duration:${7+Math.random()*8}s;animation-delay:${Math.random()*12}s;`;
+    hero.appendChild(p);
+  }
+}
+
+/* ── SCROLL REVEAL ── */
+const ro = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }), {threshold:.12});
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') { closeLB(); closeL(); }
+  if (document.getElementById('lightbox').classList.contains('open')) {
+    if (e.key==='ArrowLeft')  lbNav(-1);
+    if (e.key==='ArrowRight') lbNav(1);
+  }
+});
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  spawnPetals();
+  renderFeed();
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+});
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"John Paul & Crishia – Our Love Story","description":"The love story of John Paul Gardoce and Crishia Adviento.","author":[{"@type":"Person","name":"John Paul Gardoce"},{"@type":"Person","name":"Crishia Adviento"}]}
+</script>
 </body>
 </html>
